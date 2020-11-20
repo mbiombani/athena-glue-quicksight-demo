@@ -367,7 +367,7 @@ Resources:
         CatalogTargets:
           - DatabaseName: !Ref GlueDatabase
             Tables:
-              - etl_output_parquet
+              - !Ref etl_output_parquet
       SchemaChangePolicy:
         UpdateBehavior: "UPDATE_IN_DATABASE"
         DeleteBehavior: "LOG"
