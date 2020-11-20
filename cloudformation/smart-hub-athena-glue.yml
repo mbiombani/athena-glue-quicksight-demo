@@ -361,16 +361,12 @@ Resources:
   CrawlerETLParquetData:
     Type: AWS::Glue::Crawler
     Properties:
-      Name: smart-hub-etl-output-parquet
+     Name: smart-hub-etl-output-parquet
       Role: !GetAtt "CrawlerRole.Arn"
       Targets:
-        CatalogTargets:
-          - DatabaseName: !Ref GlueDatabase
-            Tables:
-              - etl_output_parquet
-      SchemaChangePolicy:
-        UpdateBehavior: "UPDATE_IN_DATABASE"
-        DeleteBehavior: "LOG"
+        S3Targets:
+          - Path: !Join ["", ["s3://", !Ref "DataBucket", "/etl_output_parquet"]]
+      DatabaseName: !Ref GlueDatabase
       Configuration: "{\"Version\":1.0,\"CrawlerOutput\":{\"Partitions\":{\"AddOrUpdateBehavior\":\"InheritFromTable\"},\"Tables\":{\"AddOrUpdateBehavior\":\"MergeNewColumns\"}}}"
     DependsOn:
       - CrawlerRole
